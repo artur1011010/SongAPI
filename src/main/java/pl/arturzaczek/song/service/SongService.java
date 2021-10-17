@@ -51,4 +51,16 @@ public class SongService {
                 .map(songDTOMapper::songDTOMapper)
                 .collect(Collectors.toSet());
     }
+
+    // TODO: 10/17/2021 zwaracany true na sztywno, zmienic to
+    public Boolean postSong(SongDTO songDTO){
+        log.info("postSong() {}", songDTO);
+        songRepository.saveAndFlush(songDTOMapper.songMapper(songDTO));
+        return true;
+    }
+
+    public SongDTO getSongById(Long id) {
+        log.info("getSongById() id: {}", id);
+        return songRepository.findById(id).map(songDTOMapper::songDTOMapper).orElse(SongDTO.builder().build());
+    }
 }
